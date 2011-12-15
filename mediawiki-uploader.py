@@ -5,6 +5,9 @@ import os
 import shutil
 
 wiki_url = "MediaWiki API url here"
+
+#Example: http://commons.wikimedia.org/w/api.php
+
 wiki_username = "USER NAME HERE"
 wiki_password = "PASSWORD HERE"
 
@@ -40,7 +43,6 @@ def get_file_details(image):
 		file_name=metadata['Iptc.Application2.Headline'].raw_value[0]
 		caption=metadata['Iptc.Application2.Caption'].raw_value[0]
 		file_meta = {'name':file_name,'caption':caption}
-		print file_meta
 		return file_meta
 	except:
 		print "No tag is set for the image " + image	
@@ -59,7 +61,6 @@ def move_photo(image):
 	print "Moving the Photo " + image + " to the folder 'uploaded' "
 
 def uploadphoto(image):
-	print image
 	meta = get_file_details(image)	
 	
 	if meta:
@@ -72,7 +73,6 @@ def uploadphoto(image):
 		print "Uploaded the Image " + file_name
 
 		page_name = file_name.replace(" ","_")
-		print "page Name : " + page_name
 
 		page = wikitools.Page(wiki, "File:" + page_name + ".jpeg", followRedir=True)
 		wikidata = "=={{int:filedesc}}=={{Information|description={{en|1= " + caption + "}}{{TamilWiki Media Contest}}|source={{own}}|author=[[User:" + wiki_username + "|" + wiki_username + "]]}}=={{int:license-header}}=={{self|cc-by-sa-3.0}}[[Category:" + category + "]]"
@@ -83,15 +83,8 @@ def uploadphoto(image):
 		
 for photo in listing:
 	if filetype(photo) == "JPG":
-		print "photo name : " + photo
 		uploadphoto(photo)
 		
 
 
-#===========
-
-#page = wikitools.Page(wiki, "File:White flower in garden.jpeg", followRedir=True)
-#page.edit(text="=={{int:filedesc}}=={{Information|description={{en|1=Thamarai IT Park in chennai}}{{TamilWiki Media Contest}}|date=2011-1
-#0-31|source={{own}}|author=[[User:Tshrinivasan|Tshrinivasan]]}}=={{int:license-header}}=={{self|cc-by-sa-3.0}}[[Category:TamilWiki Media Cont
-#est]]")
 

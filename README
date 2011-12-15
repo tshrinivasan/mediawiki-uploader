@@ -38,6 +38,8 @@ Filled the values for "Description" and "Title"
 
 These values will be used as description and filename while uploading.
 
+Note: If you do not set the Description and Title using the GThumb viewer, that file wont get uploaded.
+
 
 
 After uploaded the files will be moved to a subdirectory named "uploaded".
