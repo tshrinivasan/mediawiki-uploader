@@ -1,0 +1,47 @@
+Commons Uploader 0.1
+
+Author: T Shrinivasan
+Email: tshrinivasan@gmail.com
+
+Description:
+
+Commons uploader uploads all the files in the current directory to a mediawiki installation.
+
+I created this to contribute to Wikimedia Commons.
+http://commons.wikimedia.org
+
+You need the following to use this application.
+
+1. Mediawiki API path
+2. Username
+3. Password
+
+
+Provide them in the following variables
+
+1. wiki_url
+2. wiki_username
+3. wiki_password
+
+Example:
+wiki_url = "http://commons.wikimedia.org/w/api.php"
+wiki_username = "tshrinivasan"
+wiki_password = "MY PASSWORD HERE"
+
+We need to add IPTC tags to the images to add the detailed filename and description.
+I use GThumb image viewer in my ubuntu 11.10 machine.
+
+Using this, we can add/edit comments using the following menu
+Edit->Comment or Ctrl+M
+
+Filled the values for "Description" and "Title"
+
+These values will be used as description and filename while uploading.
+
+
+
+After uploaded the files will be moved to a subdirectory named "uploaded".
+If any file is missed out in the current directory, this means that the IPTC tags are not set properly.
+Use GThumb and set them.
+
+
