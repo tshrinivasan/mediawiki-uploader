@@ -42,6 +42,18 @@ Note: If you do not set the Description and Title using the GThumb viewer, that 
 
 
 
+How to run?
+-------------
+
+goto the folder that contain images in terminal or command line
+
+run the followinf command:
+
+python mediawiki-uploader.py
+
+
+Notes:
+
 After uploaded the files will be moved to a subdirectory named "uploaded".
 If any file is missed out in the current directory, this means that the IPTC tags are not set properly.
 Use GThumb and set them.
