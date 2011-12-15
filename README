@@ -1,11 +1,11 @@
-Commons Uploader 0.1
+Mediawiki Uploader 0.1
 
 Author: T Shrinivasan
 Email: tshrinivasan@gmail.com
 
 Description:
 
-Commons uploader uploads all the files in the current directory to a mediawiki installation.
+Mediawiki uploader uploads all the files in the current directory to a mediawiki installation.
 
 I created this to contribute to Wikimedia Commons.
 http://commons.wikimedia.org
