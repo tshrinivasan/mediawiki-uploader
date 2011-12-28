@@ -4,6 +4,17 @@ Required Environment:
 Ubuntu 10.04 and above
 Python 2.6 and above
 
+
+Install the packages python-poster and python-pyexiv2 from repositories.
+
+In ubuntu, do the following.
+
+sudo apt-get install python-poster python-pyexiv2
+
+---------
+
+
+
 python-wikitools from http://code.google.com/p/python-wikitools/
 
 A copy of python-wikitools also added.
@@ -27,4 +38,29 @@ To install gthumb image viewer:
 
 sudo apt-get install gthumb
  
+
+
+What to do if you get any error?
+-----------------------------------
+
+python mediawiki-uploader.py
+Traceback (most recent call last):
+ File "mediawiki-uploader.py", line 2, in <module>
+   import poster
+ImportError: No module named poster
+
+
+If you get the above error, it means that you have to install python-poster package.
+Install this using the following command.
+
+sudo apt-get install python-poster python-pyexiv2
+
+
+
+Support:
+--------
+Email to tshrinivasan@gmail.com if you need any support or have any suggestion for improving this tool.
+
+Thanks for using mediawiki-uploader and contributing to wikipedia.
+
 

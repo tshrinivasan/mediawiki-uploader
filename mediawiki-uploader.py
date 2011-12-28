@@ -40,8 +40,8 @@ def get_file_details(image):
 	try:
 		metadata = pyexiv2.ImageMetadata(image)
 		metadata.read()
-		file_name=metadata['Iptc.Application2.Headline'].raw_value[0]
-		caption=metadata['Iptc.Application2.Caption'].raw_value[0]
+		file_name=metadata['Iptc.Application2.Headline'].raw_value[0].strip()
+		caption=metadata['Iptc.Application2.Caption'].raw_value[0].strip()
 		file_meta = {'name':file_name,'caption':caption}
 		return file_meta
 	except:
