@@ -15,13 +15,15 @@ You need the following to use this application.
 1. Mediawiki API path
 2. Username
 3. Password
-
+4. Default Category for the photos
 
 Provide them in the following variables
 
 1. wiki_url
 2. wiki_username
 3. wiki_password
+4. category
+
 
 Example:
 wiki_url = "http://commons.wikimedia.org/w/api.php"
