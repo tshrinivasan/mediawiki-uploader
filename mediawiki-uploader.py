@@ -82,7 +82,7 @@ def uploadphoto(image):
 		move_photo(image)
 		
 for photo in listing:
-	if filetype(photo) == "JPG":
+	if filetype(photo) in ['JPG','jpg','GIF','gif','png','PNG']:
 		uploadphoto(photo)
 		
 
