@@ -3,6 +3,7 @@ import poster
 import pyexiv2
 import os
 import shutil
+import sys
 
 wiki_url = "MediaWiki API url here"
 
@@ -11,7 +12,7 @@ wiki_url = "MediaWiki API url here"
 wiki_username = "USER NAME HERE"
 wiki_password = "PASSWORD HERE"
 
-category = "TamilWiki Media Contest"
+category = ""
 
 try:
 	wiki = wikitools.wiki.Wiki(wiki_url)
@@ -40,15 +41,21 @@ def get_file_details(image):
 	try:
 		metadata = pyexiv2.ImageMetadata(image)
 		metadata.read()
-		file_name=metadata['Iptc.Application2.Headline'].raw_value[0].strip()
-		caption=metadata['Iptc.Application2.Caption'].raw_value[0].strip()
+                print metadata
+		file_name=(metadata['Xmp.dc.title'].raw_value)['x-default']
+                print file_name
+		caption=(metadata['Xmp.dc.description'].raw_value)['x-default']
+                print caption
 		file_meta = {'name':file_name,'caption':caption}
 		return file_meta
+
+                
 	except:
 		print "No tag is set for the image " + image	
 		exit	
 
 	
+
 def move_photo(image):
 	source = image
 	destination = "./uploaded/"+image
@@ -75,7 +82,7 @@ def uploadphoto(image):
 		page_name = file_name.replace(" ","_")
 
 		page = wikitools.Page(wiki, "File:" + page_name + ".jpeg", followRedir=True)
-		wikidata = "=={{int:filedesc}}=={{Information|description={{en|1= " + caption + "}}{{TamilWiki Media Contest}}|source={{own}}|author=[[User:" + wiki_username + "|" + wiki_username + "]]}}=={{int:license-header}}=={{self|cc-by-sa-3.0}}[[Category:" + category + "]] [[Category:Uploaded with MediawikiUploader]]"
+		wikidata = "=={{int:filedesc}}=={{Information|description={{en|1= " + caption + "}}|source={{own}}|author=[[User:" + wiki_username + "|" + wiki_username + "]]}}=={{int:license-header}}=={{self|cc-by-sa-3.0}}[[Category:" + category + "]] [[Category:Uploaded with MediawikiUploader]]"
 
 		page.edit(text=wikidata)
 

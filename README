@@ -30,7 +30,7 @@ wiki_url = "http://commons.wikimedia.org/w/api.php"
 wiki_username = "tshrinivasan"
 wiki_password = "MY PASSWORD HERE"
 
-We need to add IPTC tags to the images to add the detailed filename and description.
+We need to add XMP tags to the images to add the detailed filename and description.
 I use GThumb image viewer in my ubuntu 11.10 machine.
 
 Using this, we can add/edit comments using the following menu
@@ -41,6 +41,32 @@ Filled the values for "Description" and "Title"
 These values will be used as description and filename while uploading.
 
 Note: If you do not set the Description and Title using the GThumb viewer, that file wont get uploaded.
+
+
+
+Note:
+====
+
+The latest GThumb, Mine is 3.2.8, saves the Comments details we give to the images in a folder ".comments" and save in xml format.
+But, we need to save the comments inside the images, so that the comments will move along with the images, even if we move the images to different folders and computers.
+
+To disable the property of saving comments in ".comments" folder, do as below.
+
+
+In Gthumb, Goto Edit->Preference
+
+In the preference window, select "Extensions" tab.
+
+Disable "Comments and Tags" option
+
+Then, click "OK"
+
+
+Now, the comments are saved inside the images itself as XMP data.
+
+
+
+
 
 
 
