@@ -82,7 +82,7 @@ python mediawiki-uploader.py
 
 Notes:
 
-After uploaded the files will be moved to a subdirectory named "uploaded".
+After uploaded the files will be moved to a subdirectory named "uploaded-<timestamp>".
 If any file is missed out in the current directory, this means that the IPTC tags are not set properly.
 Use GThumb and set them.
 

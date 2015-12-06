@@ -4,6 +4,12 @@ import pyexiv2
 import os
 import shutil
 import sys
+import time
+import datetime
+
+ts = time.time()
+timestamp  = datetime.datetime.fromtimestamp(ts).strftime('%Y-%m-%d-%H-%M-%S')
+
 
 wiki_url = "MediaWiki API url here"
 
@@ -11,6 +17,7 @@ wiki_url = "MediaWiki API url here"
 
 wiki_username = "USER NAME HERE"
 wiki_password = "PASSWORD HERE"
+
 
 category = ""
 
@@ -58,14 +65,14 @@ def get_file_details(image):
 
 def move_photo(image):
 	source = image
-	destination = "./uploaded/"+image
+	destination = "./uploaded-"+ timestamp + "/" + image
 
-	if os.path.isdir("uploaded"):
+	if os.path.isdir("uploaded-" + timestamp):
 		shutil.move(source,destination)
 	else:
-		os.mkdir("uploaded")
+		os.mkdir("uploaded-" + timestamp)
 		shutil.move(source,destination)		
-	print "Moving the Photo " + image + " to the folder 'uploaded' "
+	print "Moving the Photo " + image + " to the folder 'uploaded-'" + timestamp
 
 def uploadphoto(image):
 	meta = get_file_details(image)	
@@ -73,7 +80,9 @@ def uploadphoto(image):
 	if meta:
 		file_name = meta['name']
 		caption = meta['caption']
-		
+		extension = filetype(image)
+                upload_file_name = file_name + "." + extension
+                
 		image_object=open(image,"r")
 		picture=wikitools.wikifile.File(wiki=wiki, title=file_name)
         	picture.upload(fileobj=image_object,comment=caption, ignorewarnings=True)
@@ -81,7 +90,7 @@ def uploadphoto(image):
 
 		page_name = file_name.replace(" ","_")
 
-		page = wikitools.Page(wiki, "File:" + page_name + ".jpeg", followRedir=True)
+		page = wikitools.Page(wiki, "File:" + page_name + "." + extension, followRedir=True)
 		wikidata = "=={{int:filedesc}}=={{Information|description={{en|1= " + caption + "}}|source={{own}}|author=[[User:" + wiki_username + "|" + wiki_username + "]]}}=={{int:license-header}}=={{self|cc-by-sa-3.0}}[[Category:" + category + "]] [[Category:Uploaded with MediawikiUploader]]"
 
 		page.edit(text=wikidata)
