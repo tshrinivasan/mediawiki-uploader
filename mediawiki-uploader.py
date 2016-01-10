@@ -11,12 +11,12 @@ ts = time.time()
 timestamp  = datetime.datetime.fromtimestamp(ts).strftime('%Y-%m-%d-%H-%M-%S')
 
 
-wiki_url = "MediaWiki API url here"
+#wiki_url = "MediaWiki API url here"
 
-#Example: http://commons.wikimedia.org/w/api.php
+wiki_url =  "https://commons.wikimedia.org/w/api.php"
 
-wiki_username = "USER NAME HERE"
-wiki_password = "PASSWORD HERE"
+wiki_username = "USERNAME"
+wiki_password = "PASSWORD"
 
 
 category = ""
@@ -27,11 +27,20 @@ except:
 	print "Can not connect with wiki. Check the URL"
 
 
-try:
-	wiki.login(username=wiki_username,password=wiki_password)
+login_result = wiki.login(username=wiki_username,password=wiki_password)
 
-except:
-	print "Invalid Username or Password"
+#print "login status = " + str(login_result)
+if login_result == True:
+	print "Logged in."
+else:
+	print "Invalid username or password error"
+	sys.exit()
+
+
+
+
+
+
 
 path = './'
 
@@ -48,11 +57,11 @@ def get_file_details(image):
 	try:
 		metadata = pyexiv2.ImageMetadata(image)
 		metadata.read()
-                print metadata
+ #               print metadata
 		file_name=(metadata['Xmp.dc.title'].raw_value)['x-default']
-                print file_name
+ #               print file_name
 		caption=(metadata['Xmp.dc.description'].raw_value)['x-default']
-                print caption
+ #               print caption
 		file_meta = {'name':file_name,'caption':caption}
 		return file_meta
 
@@ -72,7 +81,7 @@ def move_photo(image):
 	else:
 		os.mkdir("uploaded-" + timestamp)
 		shutil.move(source,destination)		
-	print "Moving the Photo " + image + " to the folder 'uploaded-'" + timestamp
+	print "Moving the Photo " + image + " to the folder 'uploaded-" + timestamp + "'"
 
 def uploadphoto(image):
 	meta = get_file_details(image)	
@@ -84,16 +93,35 @@ def uploadphoto(image):
                 upload_file_name = file_name + "." + extension
                 
 		image_object=open(image,"r")
-		picture=wikitools.wikifile.File(wiki=wiki, title=file_name)
+		picture=wikitools.wikifile.File(wiki=wiki, title=upload_file_name)
         	picture.upload(fileobj=image_object,comment=caption, ignorewarnings=True)
-		print "Uploaded the Image " + file_name
+		print "Uploaded the Image " + image
 
 		page_name = file_name.replace(" ","_")
 
 		page = wikitools.Page(wiki, "File:" + page_name + "." + extension, followRedir=True)
-		wikidata = "=={{int:filedesc}}=={{Information|description={{en|1= " + caption + "}}|source={{own}}|author=[[User:" + wiki_username + "|" + wiki_username + "]]}}=={{int:license-header}}=={{self|cc-by-sa-3.0}}[[Category:" + category + "]] [[Category:Uploaded with MediawikiUploader]]"
+#		wikidata = "=={{int:filedesc}}=={{Information|description={{en|1= " + caption + "}}|source={{own}}|author=[[User:" + wiki_username + "|" + wiki_username + "]]}}=={{int:license-header}}=={{self|cc-by-sa-3.0}}[[Category:" + category + "]] [[Category:Uploaded with MediawikiUploader]]"
+
+                wikidata = """=={{int:filedesc}}==
+{{Information
+|description={{en|1= """ + caption + """}}
+|source={{own}}
+|author= [[User:""" + wiki_username + "|" + wiki_username + """]]
+|permission=
+|other versions=
+}}
+
+=={{int:license-header}}==
+{{self|cc-by-sa-4.0}}
+
+[[Category:Uploaded with MediawikiUploader]]
+
+"""
+
 
 		page.edit(text=wikidata)
+
+                print "Image URL = " +  wiki_url.split('/w')[0] + "/wiki/File:" + page_name + "." + extension 
 
 		move_photo(image)
 		
