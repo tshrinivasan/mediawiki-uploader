@@ -11,12 +11,12 @@ ts = time.time()
 timestamp  = datetime.datetime.fromtimestamp(ts).strftime('%Y-%m-%d-%H-%M-%S')
 
 
-#wiki_url = "MediaWiki API url here"
+wiki_url = "MediaWiki API url here"
 
-wiki_url =  "https://commons.wikimedia.org/w/api.php"
+#wiki_url =  "https://commons.wikimedia.org/w/api.php"
 
-wiki_username = "USERNAME"
-wiki_password = "PASSWORD"
+wiki_username = ""
+wiki_password = ""
 
 
 category = ""
@@ -87,6 +87,7 @@ def uploadphoto(image):
 	meta = get_file_details(image)	
 	
 	if meta:
+                print "Uploading the Image " + image
 		file_name = meta['name']
 		caption = meta['caption']
 		extension = filetype(image)
@@ -95,7 +96,7 @@ def uploadphoto(image):
 		image_object=open(image,"r")
 		picture=wikitools.wikifile.File(wiki=wiki, title=upload_file_name)
         	picture.upload(fileobj=image_object,comment=caption, ignorewarnings=True)
-		print "Uploaded the Image " + image
+        
 
 		page_name = file_name.replace(" ","_")
 
@@ -118,6 +119,8 @@ def uploadphoto(image):
 
 """
 
+                if len(category.strip()) > 2:
+                        wikidata = wikidata + "\n" + "[[Category:" + category + "]]"
 
 		page.edit(text=wikidata)
 
